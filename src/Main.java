@@ -5,12 +5,22 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
 public class Main {
+
+    public static boolean verificaHistorico(ArrayList<Integer> lAnteriores,int futuraPosicao) {
+        System.out.println("Checking historico");
+        return !lAnteriores.contains(futuraPosicao);
+    }
+
+    public static boolean verificaPosicao(ArrayList<Integer> cAnteriores, int linhaOuColuna) {
+        System.out.println("Checking linha ou coluna");
+
+        return !cAnteriores.contains(linhaOuColuna);
+    }
 
     public static void main(String[] args) {
         // LE O ARQUIVO
@@ -105,8 +115,11 @@ public class Main {
         {
 
 
+
+
+
             //if Pode ir para cima? Ent�o move e guarda o movimento C na list resultado
-            if (lAtual > 0 && matriz[(lAtual-1)][cAtual].equals("0") && !lAnteriores.contains(lAtual -1) | !cAnteriores.contains(cAtual)){
+            if (lAtual > 0 && matriz[(lAtual-1)][cAtual].equals("0") &&(verificaHistorico(lAnteriores, (lAtual - 1)) || verificaPosicao(cAnteriores, cAtual))){
                 System.out.println("antes"+lAtual);
                 lAnterior = lAtual;
                 cAnterior = cAtual;
@@ -119,7 +132,7 @@ public class Main {
 
             }
             //else if Pode ir para esquerda? Ent�o move e guarda o movimento E na list resultado
-            else if (cAtual > 0 && matriz[lAtual][(cAtual-1)].equals("0") && !cAnteriores.contains(cAtual-1) | !lAnteriores.contains(lAtual)){
+            else if (cAtual > 0 && matriz[lAtual][(cAtual-1)].equals("0") && (verificaHistorico(cAnteriores, (cAtual - 1)) || verificaPosicao(lAnteriores, lAtual))){
                 System.out.println("antes"+cAtual);
                 lAnterior = lAtual;
                 cAnterior = cAtual;
@@ -132,7 +145,7 @@ public class Main {
 
             }
             //else if Pode ir para direita? Ent�o move e guarda o movimento D na list resultado
-            else if ( matriz[lAtual][(cAtual + 1)].equals("0") && cAtual < extremidadeLinha && !cAnteriores.contains(cAtual +1) | !lAnteriores.contains(lAtual)) {
+            else if ( matriz[lAtual][(cAtual + 1)].equals("0") && cAtual < extremidadeLinha && (verificaHistorico(cAnteriores, (cAtual + 1)) || verificaPosicao(lAnteriores, lAtual))) {
                 System.out.println("Antes " + cAtual);
                 lAnterior = lAtual;
                 cAnterior = cAtual;
@@ -147,7 +160,7 @@ public class Main {
 
             }
             //else if Pode ir para baixo?  Ent�o move e guarda o movimento B na list resultado
-            else if ( matriz[(lAtual + 1)][cAtual].equals("0") && lAtual < extremidadeColuna && !lAnteriores.contains(lAtual+1) | !cAnteriores.contains(cAtual)) {
+            else if ( matriz[(lAtual + 1)][cAtual].equals("0") && lAtual < extremidadeColuna && (verificaHistorico(lAnteriores, (lAtual + 1)) || verificaPosicao(cAnteriores, cAtual))) {
                 System.out.println("antes"+lAtual);
 
                 lAnterior = lAtual;
@@ -165,8 +178,6 @@ public class Main {
                 System.out.println("voltando posiçao");
                 lAtual = lAnterior;
                 cAtual = cAnterior;
-
-
             }
             // Achou a sa�da?
 
